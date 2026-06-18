@@ -47,7 +47,7 @@ GO
 -- Create Dimension: gold.dim_products
 -- ==============================================================================================
 IF OBJECT_ID('gold.dim_products', 'V') IS NOT NULL
-    DROP VIEW gold.dim_customers;
+    DROP VIEW gold.dim_products;
 GO
 
 CREATE VIEW gold.dim_products AS 
@@ -73,7 +73,7 @@ GO
 -- Create Fact: gold.fact_sales
 -- ==============================================================================================
 IF OBJECT_ID('gold.fact_sales', 'V') IS NOT NULL
-    DROP VIEW gold.dim_customers;
+    DROP VIEW gold.fact_sales;
 GO
 
 CREATE VIEW gold.fact_sales AS 
