@@ -10,8 +10,8 @@ The Gold layer is the business-level data representation, structured to support 
 - **Columns:**
 |**Columns Name**|**Data Type**|**Description**|
 |---|---|---|
-|customer_key|INT|Surragorate key uniquely identifying each customer record in the dimension table.|
-|customer_id|INT|Unique numerical identifier assigned to each customer.|
+| customer_key | INT | Surragorate key uniquely identifying each customer record in the dimension table. |
+| customer_id | INT | Unique numerical identifier assigned to each customer. |
 |customer_number|NVARCHAR(50)|Alphanumeric identifier representing the customer, used for trackingn and referencing.|
 |first_name|NVARCAHR(50)|THe custo,er's first name, as recorded in the system.|
 |last_name|NVARCAHR(50)|THe customer's last name or family name.|
