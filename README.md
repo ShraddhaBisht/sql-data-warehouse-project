@@ -57,8 +57,6 @@ Develop SQL-based analytics to deliver detailed insights into:
 
 These insights empowers stakeholders with key business metrics, enabling strategic decision-making.
 
-For more details, refer to [docs/requirements.md](docs/requirements.md).
-
 ## 📂 Repository Structure
 ```
 data-warehouse-project/
@@ -86,7 +84,7 @@ data-warehouse-project/
 ---
 
 ## 🛡️ License
-This project is licensed under the [MIT License].(License). You are free to use, modify and share this project with proper attribution .
+This project is licensed under the [MIT License].(License). And is free to use, modify and share this project with proper attribution .
 
 ## 🌱 About Me✨
 
@@ -95,5 +93,5 @@ Hi there! I'm **Shraddha Bisht**.
 ### ☕ Stay Connected
 Let's stay in touch! Feel free to connect with me on the following platforms:
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/baraa-khatib-salkini)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/shraddha-bisht)
 [![PayPal](https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/baraasalkini)
