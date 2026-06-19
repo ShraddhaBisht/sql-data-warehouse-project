@@ -4,7 +4,7 @@
 Quality Checks
 =============================================================================================================================
 Script Purpose:
-    This script performs quality cehcks to validate teh integrity, consistency,
+    This script performs quality cehcks to validate the integrity, consistency,
     and accuracy of the Gold Layer, These checks assure:
     - Uniqueness of surrogate keys in dimension tables.
     - Referential integrity between fact and dimension tables.
@@ -20,10 +20,10 @@ USage Notes:
 -- Checking 'gold.dim_customers' 
 -- ==============================================================================================
 -- Check for uniqueness of Custoemr Key in gold.dim_customers
---Expectation: No Result
+-- Expectation: No Results
 SELECT 
   customer_key,
-  COUNT(*) AS Duplicate_count
+  COUNT(*) AS duplicate_count
 FROM gold.dim_customers
 GROUP BY customer_key
 HAVING COUNT (*) > 1;
@@ -33,7 +33,7 @@ HAVING COUNT (*) > 1;
 -- Checking 'gold.dim_products' 
 -- ==============================================================================================
 -- Check for uniqueness of Product Key in gold.dim_products
---Expectation: No Result
+-- Expectation: No Results
 SELECT 
   product_key,
   COUNT(*) AS duplicate_count
