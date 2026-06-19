@@ -55,8 +55,15 @@ SELECT
 FROM silver.crm_prd_info
 GROUP BY prd_id
 HAVING COUNT(*) > 1 or prd_id IS NULL;
+
+-- Check for Unwanted Spaces
+-- Expectation: No Results
+SELECT 
+    prd_nm 
+FROM silver.crm_prd_info
+WHERE prd_nm != TRIM(prd_nm);
  
--- Check for Invalid Product Cost
+-- Check for NULLs or Negative Values in Cost
 -- DExpectation: No Results
 SELECT
 	prd_cost
@@ -80,7 +87,7 @@ WHERE prd_end_dt < prd_start_dt;
 -- Checking 'silver.crm_sales_details'
 -- ======================================================================================
 -- Check for Invalid Dates 
---Expectation: No Invalid Date
+-- Expectation: No Invalid Date
 SELECT 
 	NULLIF(sls_due_dt, 0) AS sls_due_date
 FROM bronze.crm_sales_details
@@ -108,7 +115,7 @@ WHERE sls_sales != sls_quantity * sls_price
 	OR sls_sales IS NULL
 	OR sls_quantity IS NULL
 	OR sls_price IS NULL
-	OR sls_sales = 0 
+	OR sls_sales <= 0 
 	OR sls_quantity <= 0
 	OR sls_price <= 0
 ORDER BY sls_sales, sls_quantity, sls_price;
