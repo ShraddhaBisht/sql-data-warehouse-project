@@ -76,22 +76,20 @@ data-warehouse-project/
 │
 ├── tests/                              # Test scripts and quality files
 │
-├── README.md                           # Project overview and instructions
-├── LICENSE                             # License information for the repository
-├── .gitignore                          # Files and directories to be ignored by Git
-└── requirements.txt                    # Dependencies and requirements for the project
+├── LICENSE                             # License information for the repositor
+└──  README.md                          # Project overview and instructions 
 ```
 ---
 
 ## 🛡️ License
-This project is licensed under the [MIT License].(License). And is free to use, modify and share this project with proper attribution .
+This project is licensed under the [MIT License].(License). And is free to use, modify and share this project with proper attribution.
 
 ## 🌱 About Me✨
 
-Hi there! I'm **Shraddha Bisht**.
+Hi there! I'm **Shraddha Bisht**. 
+Thanks for checking out this project! I'm passionate about Data Analytics, SQL, Power BI, and Data Engineering, and I regularly build projects to strengthen my skills and explore real-world data challenges.
 
 ### ☕ Stay Connected
-Let's stay in touch! Feel free to connect with me on the following platforms:
-
+Let's stay in touch!
+If you found this project useful, Feel free to connect with me on LinkedIn.
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/shraddha-bisht)
-[![PayPal](https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/baraasalkini)
