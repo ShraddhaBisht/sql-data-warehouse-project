@@ -4,16 +4,16 @@ Stored Procedure: Load Silver Layer (Bronze -> Silver)
 ===============================================================================================================================
 Script Purpose:
     This stored procedure performs the ETL (Extract, Transform, Load) process to
-    populate the 'silver' schema tables from the 'bronze' sche,a.
+    populate the 'silver' schema tables from the 'bronze' schema.
   Actions Performed:
     - Truncates Silver tables.
     - Inserts transformed and cleaned data from Bronze into Silver tables.
 
-PArameters:
-    None
+Parameters:
+    None.
     This stored procedure does not accept any parameters or return any values.
 
-Usage Exa,ple:
+Usage Example:
     EXEC silver.load_silver;
 ===============================================================================================================================
 */
@@ -32,6 +32,7 @@ BEGIN
 		PRINT 'Loading CRM Tables';
 		PRINT '---------------------------------------------------------------------------------------';
 	-----------------------------------------------------------------------------------------------------
+		-- Loading silver.crm_cust_info		
 		SET @start_time = GETDATE();
 		PRINT '>> Truncating the table: silver.crm_cust_info';
 		TRUNCATE TABLE silver.crm_cust_info;	
@@ -42,7 +43,7 @@ BEGIN
 			cst_key,
 			cst_firstname,
 			cst_lastname,
-			cst_material_status,
+			cst_marital_status,
 			cst_gndr,
 			cst_create_date)
 		SELECT
@@ -68,12 +69,13 @@ BEGIN
 			FROM bronze.crm_cust_info
 			WHERE cst_id IS NOT NULL
 		) t 
-		WHERE flag_last = 1;
+		WHERE flag_last = 1; -- Select the most recent record per customer
 		
 		SET @end_time = GETDATE();
 		PRINT '>> Load Duration: ' + CAST(DATEDIFF(second, @start_time, @end_time) AS NVARCHAR) + ' seconds';
 		PRINT '>>-------------------';
 	-----------------------------------------------------------------------------------------------------	
+		-- Loading silver.crm_prd_info
 		SET @start_time = GETDATE();
 		PRINT '>> Truncating the table: silver.crm_prd_info';
 		TRUNCATE TABLE silver.crm_prd_info;
@@ -90,26 +92,27 @@ BEGIN
 			prd_end_dt
 		)
 		SELECT 
-		prd_id,
-		REPLACE(SUBSTRING(prd_key,1, 5), '-', '_') AS cat_id,  -- new added col
-		SUBSTRING(prd_key, 7, LEN(PRD_KEY)) AS prd_key,         
-		prd_nm,
-		ISNULL(prd_cost, 0) AS prd_cost,
-		CASE UPPER(TRIM(prd_line))
-			WHEN 'M' THEN 'Mounatin'
-			WHEN 'R' THEN 'Road'
-			WHEN 'S' THEN 'Other Sales'
-			WHEN 'T' THEN 'Touring'
-			ELSE 'n/a'
-		END AS prd_line,
-		CAST(prd_start_dt AS DATE) AS prd_start_dt,
-		CAST(LEAD(prd_start_dt) OVER (PARTITION BY prd_key ORDER BY  prd_start_dt) -1 AS DATE) AS prd_end_dt
+			prd_id,
+			REPLACE(SUBSTRING(prd_key,1, 5), '-', '_') AS cat_id,  -- Extract category ID
+			SUBSTRING(prd_key, 7, LEN(PRD_KEY)) AS prd_key,        -- Extract product key      
+			prd_nm,
+			ISNULL(prd_cost, 0) AS prd_cost,
+			CASE UPPER(TRIM(prd_line))
+				WHEN 'M' THEN 'Mounatin'
+				WHEN 'R' THEN 'Road'
+				WHEN 'S' THEN 'Other Sales'
+				WHEN 'T' THEN 'Touring'
+				ELSE 'n/a'
+			END AS prd_line, -- Map product line codes to descriptive values
+			CAST(prd_start_dt AS DATE) AS prd_start_dt,
+			CAST(LEAD(prd_start_dt) OVER (PARTITION BY prd_key ORDER BY  prd_start_dt) -1 AS DATE) AS prd_end_date -- Calculate end date as one day before the next start date 
 		FROM bronze.crm_prd_info;
 		
 		SET @end_time = GETDATE();
 		PRINT '>> Load Duration ' + CAST(DATEDIFF(second, @start_time, @end_time) AS NVARCHAR) + ' seconds';
 		PRINT '>>-------------------';
 	-----------------------------------------------------------------------------------------------------
+		 -- Loading crm_sales_details
 		SET @start_time = GETDATE();
 		PRINT '>> Truncating the table: silver.crm_sales_details';
 		TRUNCATE TABLE silver.crm_sales_details;	
@@ -151,8 +154,8 @@ BEGIN
 		CASE 
 			WHEN sls_price IS NULL OR sls_price <= 0 
 				THEN sls_sales / NULLIF(sls_quantity,0)
-			ELSE sls_price
-		END AS sls_price   -- Derive price if original value is invalid 
+			ELSE sls_price  -- Derive price if original value is invalid 
+		END AS sls_price   
 		FROM bronze.crm_sales_details;
 		
 		SET @end_time = GETDATE();
@@ -163,70 +166,72 @@ BEGIN
 		PRINT 'Loading ERP Tables';
 		PRINT '---------------------------------------------------------------------------------------';
 	-----------------------------------------------------------------------------------------------------
-
+		 -- Loading erp_cust_az12
 		SET @start_time = GETDATE();
 		PRINT '>> Truncating the table: silver.erp_cust_az12';
 		TRUNCATE TABLE silver.erp_cust_az12;	
 		PRINT '>> Inserting data into: silver.erp_cust_az12';
 
 		INSERT INTO [silver].[erp_cust_az12] (
-		cid,
-		bdate,
-		gen
+			cid,
+			bdate,
+			gen
 		)
 		SELECT 
-		CASE
-			WHEN  cid LIKE 'NAS%' THEN SUBSTRING(cid, 4, LEN(cid))
-			ELSE cid
-		END AS cid,
-		CASE 
-			WHEN bdate > GETDATE() THEN NULL
-			ELSE bdate
-		END AS bdate,
-		CASE
-			 WHEN UPPER(TRIM(gen)) IN ('F', 'Female') THEN 'Female'
-			 WHEN UPPER(TRIM(gen)) IN ('M', 'Male') THEN 'Male'
-			 ELSE 'n/a'
-		END AS gen
+			CASE
+				WHEN  cid LIKE 'NAS%' THEN SUBSTRING(cid, 4, LEN(cid))  -- Remove 'NAS' prefix if present
+				ELSE cid
+			END AS cid,
+			CASE 
+				WHEN bdate > GETDATE() THEN NULL
+				ELSE bdate
+			END AS bdate,  -- Set future birthdates to NULL
+			CASE
+				 WHEN UPPER(TRIM(gen)) IN ('F', 'Female') THEN 'Female'
+				 WHEN UPPER(TRIM(gen)) IN ('M', 'Male') THEN 'Male'
+				 ELSE 'n/a'
+			END AS gen  -- Normalize gender values and handle unknown cases
 		FROM bronze.erp_cust_az12;
 		
 		SET @end_time = GETDATE();
 		PRINT '>> Load Duration ' + CAST(DATEDIFF(second, @start_time, @end_time) AS NVARCHAR) + ' seconds';
 		PRINT '>>-------------------';
 	-----------------------------------------------------------------------------------------------------
+		-- Loading erp_loc_a101
 		SET @start_time = GETDATE();
 		PRINT '>> Truncating the table:silver.erp_loc_a101';
 		TRUNCATE TABLE silver.erp_loc_a101;	
 		PRINT '>> Inserting data into: silver.erp_loc_a101';
 		
 		INSERT INTO [silver].[erp_loc_a101]
-		(cid, cntry)
+			(cid, cntry)
 		SELECT 
-		REPLACE(cid, '-', '') cid,
-		CASE
-			WHEN TRIM(cntry) = 'DE' THEN 'Germany'
-			WHEN TRIM(cntry) IN ('US', 'USA') THEN 'United States'
-			WHEN TRIM(cntry) = '' OR cntry IS NULL THEN 'n/a'
-			ELSE TRIM(cntry)
-		END AS cntry
+			REPLACE(cid, '-', '') cid,
+			CASE
+				WHEN TRIM(cntry) = 'DE' THEN 'Germany'
+				WHEN TRIM(cntry) IN ('US', 'USA') THEN 'United States'
+				WHEN TRIM(cntry) = '' OR cntry IS NULL THEN 'n/a'
+				ELSE TRIM(cntry)
+			END AS cntry  -- Normalize and Handle missing or blank country codes
 		FROM bronze.erp_loc_a101;
 
 		SET @end_time = GETDATE();
 		PRINT '>> Load Duration ' + CAST(DATEDIFF(second, @start_time, @end_time) AS NVARCHAR) + ' seconds';
 		PRINT '>>-------------------';
 	-----------------------------------------------------------------------------------------------------
+		-- Loading erp_px_cat_g1v2
 		SET @start_time = GETDATE();
 		PRINT '>> Truncating the table: silver.erp_px_cat_g1v2';
 		TRUNCATE TABLE silver.erp_px_cat_g1v2;	
 		PRINT '>> Inserting data into: silver.erp_px_cat_g1v2';
 
 		INSERT INTO silver.erp_px_cat_g1v2
-		(id, cat, subcat, maintenance)
+			(id, cat, subcat, maintenance)
 		SELECT 
-		id,
-		cat,
-		subcat,
-		maintenance
+			id,
+			cat,
+			subcat,
+			maintenance
 		FROM bronze.erp_px_cat_g1v2;
 
 		SET @end_time = GETDATE();
@@ -234,19 +239,19 @@ BEGIN
 		PRINT '>>-------------------';
 
 		SET @batch_end_time = GETDATE();
------------------------------------------------------------------------------------------------------
+
 		PRINT '=======================================================================================';
 		PRINT 'Loading Silver Layer is Completed';
 		PRINT '    - Total Load Duration: ' + CAST(DATEDIFF(second, @batch_start_time, @batch_end_time) AS NVARCHAR) + 'seconds';
 		PRINT '=======================================================================================';
+	
 	END TRY
 	BEGIN CATCH
 		PRINT '=======================================================================================';
 		PRINT 'ERROR OCCURED DURING LOADING SILVER LAYER';
 		PRINT 'Error Message' + ERROR_MESSAGE();
-		PRINT 'Error Message' + CAST(Error_Number() AS NVARCHAR);
-		PRINT 'Error Message' + CAST(Error_State() AS NVARCHAR);
+		PRINT 'Error Message' + CAST(Error_NUMBER() AS NVARCHAR);
+		PRINT 'Error Message' + CAST(Error_STATE() AS NVARCHAR);
 		PRINT '=======================================================================================';
 	END CATCH
 END
-EXEC silver.load_silver;
