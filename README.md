@@ -85,7 +85,7 @@ data-warehouse-project/
 This project is licensed under the [MIT License].(License). And is free to use, modify and share this project with proper attribution.
 
 ---
-## 💻 Tech Stack Used fro this repository
+## 💻Technologies & 🛠️ Concepts Used
 [![SQL Server](https://img.shields.io/badge/SQL_Server-CC2927?style=for-the-badge&logo=microsoftsqlserver&logoColor=white)](https://www.microsoft.com/en-us/sql-server)
 [![ETL Pipeline](https://img.shields.io/badge/ETL_Pipeline-FF6F00?style=for-the-badge&logo=apacheairflow&logoColor=white)]()
 [![Star Schema](https://img.shields.io/badge/Star_Schema-6A1B9A?style=for-the-badge)]()
