@@ -84,6 +84,13 @@ data-warehouse-project/
 ## 🛡️ License
 This project is licensed under the [MIT License].(License). And is free to use, modify and share this project with proper attribution.
 
+---
+## 💻 Tech Stack Used fro this repository
+![SQL](https://img.shields.io/badge/SQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+![Microsoft SQL Server](https://img.shields.io/badge/Microsoft_SQL_Server-CC2927?style=for-the-badge&logo=microsoftsqlserver&logoColor=white)
+[![Draw.io](https://img.shields.io/badge/Draw.io-F08705?style=for-the-badge&logo=diagramsdotnet&logoColor=white)](https://app.diagrams.net/)
+
+---
 ## 🌱 About Me✨
 
 Hi there! I'm **Shraddha Bisht**. 
