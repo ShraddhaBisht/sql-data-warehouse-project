@@ -87,11 +87,9 @@ This project is licensed under the [MIT License].(License). And is free to use, 
 ---
 ## 💻 Tech Stack Used fro this repository
 [![SQL Server](https://img.shields.io/badge/SQL_Server-CC2927?style=for-the-badge&logo=microsoftsqlserver&logoColor=white)](https://www.microsoft.com/en-us/sql-server)
-[![Microsoft SQL Server](https://img.shields.io/badge/Microsoft_SQL_Server-CC2927?style=for-the-badge&logo=microsoftsqlserver&logoColor=white)](https://www.microsoft.com/en-us/sql-server)
-[![Draw.io](https://img.shields.io/badge/Draw.io-F08705?style=for-the-badge&logo=diagramsdotnet&logoColor=white)](https://app.diagrams.net/)
-[![Data Modeling](https://img.shields.io/badge/Data_Modeling-4285F4?style=for-the-badge&logo=databricks&logoColor=white)]()
 [![ETL Pipeline](https://img.shields.io/badge/ETL_Pipeline-FF6F00?style=for-the-badge&logo=apacheairflow&logoColor=white)]()
 [![Star Schema](https://img.shields.io/badge/Star_Schema-6A1B9A?style=for-the-badge)]()
+[![Draw.io](https://img.shields.io/badge/Draw.io-F08705?style=for-the-badge&logo=diagramsdotnet&logoColor=white)](https://app.diagrams.net/)
 
 ---
 ## 🌱 About Me✨
