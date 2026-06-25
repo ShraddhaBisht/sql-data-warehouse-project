@@ -87,6 +87,7 @@ This project is licensed under the [MIT License].(License). And is free to use, 
 ---
 ## 💻Technologies & 🛠️ Concepts Used
 [![SQL Server](https://img.shields.io/badge/SQL_Server-CC2927?style=for-the-badge&logo=microsoftsqlserver&logoColor=white)](https://www.microsoft.com/en-us/sql-server)
+[![T-SQL](https://img.shields.io/badge/T--SQL-CC2927?style=for-the-badge&logo=microsoftsqlserver&logoColor=white)](https://learn.microsoft.com/en-us/sql/t-sql)
 
 [![ETL Pipeline](https://img.shields.io/badge/ETL_Pipeline-FF6F00?style=for-the-badge&logo=apacheairflow&logoColor=white)]()
 [![ETL Development](https://img.shields.io/badge/ETL_Development-FF6F00?style=for-the-badge&logoColor=white)](https://en.wikipedia.org/wiki/Extract,_transform,_load)
