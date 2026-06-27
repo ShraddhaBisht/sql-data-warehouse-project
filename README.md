@@ -97,6 +97,15 @@ This project is licensed under the [MIT License].(License). And is free to use, 
 [![Draw.io](https://img.shields.io/badge/Draw.io-F08705?style=for-the-badge&logo=diagramsdotnet&logoColor=white)](https://app.diagrams.net/)
 
 ---
+## Acknowledgements
+
+Special thanks to **Baraa Khatib Salkini (DataWithBaraa)** for creating the original SQL Data Warehouse project and accompanying learning resources. This repository was recreated for educational purposes by following his blog and excellent Yotube guided videos.
+
+- Blog: https://www.blog.datawithbaraa.com/p/build-a-data-warehouse-from-scratch
+- YouTube Video: https://www.youtube.com/watch?v=9GVqKuTVANE
+- GitHub Repository: https://github.com/DataWithBaraa/sql-data-warehouse-project
+---
+
 ## 🌱 About Me✨
 
 Hi there! I'm **Shraddha Bisht**. 
