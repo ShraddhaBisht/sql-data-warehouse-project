@@ -104,7 +104,6 @@ Special thanks to **Baraa Khatib Salkini (DataWithBaraa)** for creating the orig
 ### Original Resources
 - 📖 Blog: https://www.blog.datawithbaraa.com/p/build-a-data-warehouse-from-scratch
 - 🎥 YouTube: https://www.youtube.com/watch?v=9GVqKuTVANE
-- 💻 GitHub Repository: https://github.com/DataWithBaraa/sql-data-warehouse-project
 
 ---
 ## 🌱 About Me✨
